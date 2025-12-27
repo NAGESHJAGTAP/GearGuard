@@ -141,6 +141,12 @@ exports.changeStage = async (req, res) => {
         }
 
         await request.save();
+        if (stage === 'repaired') {
+            request.completion_date = Date.now();
+        }
+
+        await request.save();
+
         res.status(200).json({ success: true, data: request });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
@@ -148,6 +154,7 @@ exports.changeStage = async (req, res) => {
 };
 
 // @desc    Get requests for calendar
+// @desc    Get calendar requests
 // @route   GET /api/requests/calendar
 // @access  Private
 exports.getCalendarRequests = async (req, res) => {
@@ -155,6 +162,8 @@ exports.getCalendarRequests = async (req, res) => {
         const requests = await MaintenanceRequest.find({
             scheduled_date: { $exists: true }
         }).populate('equipment', 'name');
+            scheduled_date: { $exists: true, $ne: null }
+        }).select('subject scheduled_date type');
 
         res.status(200).json({ success: true, count: requests.length, data: requests });
     } catch (error) {
@@ -172,6 +181,10 @@ exports.getOverdueRequests = async (req, res) => {
             stage: { $ne: 'completed' },
             due_date: { $lt: today }
         }).populate('equipment', 'name');
+        const requests = await MaintenanceRequest.find({
+            scheduled_date: { $lt: new Date() },
+            stage: { $in: ['new', 'in-progress'] }
+        });
 
         res.status(200).json({ success: true, count: requests.length, data: requests });
     } catch (error) {

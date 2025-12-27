@@ -79,3 +79,20 @@ exports.deleteDepartment = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// @desc    Get single department
+// @route   GET /api/departments/:id
+// @access  Private
+exports.getDepartment = async (req, res) => {
+    try {
+        const department = await Department.findById(req.params.id);
+
+        if (!department) {
+            return res.status(404).json({ success: false, message: 'Department not found' });
+        }
+
+        res.status(200).json({ success: true, data: department });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
