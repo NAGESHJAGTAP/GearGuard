@@ -12,11 +12,11 @@ connectDB();
 
 // Import routes
 const authRoutes = require('./routes/auth');
-// const userRoutes = require('./routes/users');
-// const departmentRoutes = require('./routes/departments');
-// const teamRoutes = require('./routes/teams');
-// const equipmentRoutes = require('./routes/equipment');
-// const requestRoutes = require('./routes/requests');
+const userRoutes = require('./routes/users');
+const departmentRoutes = require('./routes/departments');
+const teamRoutes = require('./routes/teams');
+const equipmentRoutes = require('./routes/equipment');
+const requestRoutes = require('./routes/requests');
 
 const app = express();
 
@@ -35,11 +35,11 @@ if (process.env.NODE_ENV === 'development') {
 
 // Routes
 app.use('/api/auth', authRoutes);
-// app.use('/api/users', userRoutes);
-// app.use('/api/departments', departmentRoutes);
-// app.use('/api/teams', teamRoutes);
-// app.use('/api/equipment', equipmentRoutes);
-// app.use('/api/requests', requestRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/departments', departmentRoutes);
+app.use('/api/teams', teamRoutes);
+app.use('/api/equipment', equipmentRoutes);
+app.use('/api/requests', requestRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

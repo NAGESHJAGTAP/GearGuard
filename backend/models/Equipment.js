@@ -1,80 +1,57 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const mongoose = require('mongoose');
 
-const Equipment = sequelize.define('Equipment', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+const equipmentSchema = new mongoose.Schema({
     name: {
-        type: DataTypes.STRING(100),
-        allowNull: false
+        type: String,
+        required: [true, 'Please add equipment name'],
+        trim: true
     },
     serial_number: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true
+        type: String,
+        required: [true, 'Please add serial number'],
+        unique: true,
+        trim: true
     },
     category: {
-        type: DataTypes.STRING(50),
-        allowNull: false
+        type: String,
+        required: [true, 'Please add category']
+    },
+    image_url: {
+        type: String
     },
     purchase_date: {
-        type: DataTypes.DATE,
-        allowNull: true
+        type: Date,
+        required: [true, 'Please add purchase date']
     },
     warranty_expiry: {
-        type: DataTypes.DATE,
-        allowNull: true
+        type: Date,
+        required: [true, 'Please add warranty expiry date']
     },
     location: {
-        type: DataTypes.STRING(255),
-        allowNull: true
+        type: String,
+        required: [true, 'Please add location']
     },
-    department_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'departments',
-            key: 'id'
-        }
+    status: {
+        type: String,
+        enum: ['active', 'scrapped', 'maintenance'],
+        default: 'active'
     },
-    employee_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'users',
-            key: 'id'
-        }
+    department: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Department',
+        required: true
     },
-    team_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'maintenance_teams',
-            key: 'id'
-        }
+    assigned_employee: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
-    default_technician_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'users',
-            key: 'id'
-        }
-    },
-    is_scrapped: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-    },
-    scrap_notes: {
-        type: DataTypes.TEXT,
-        allowNull: true
+    maintenance_team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'MaintenanceTeam',
+        required: true
     }
 }, {
-    tableName: 'equipment',
     timestamps: true
 });
 
-module.exports = Equipment;
+module.exports = mongoose.model('Equipment', equipmentSchema);

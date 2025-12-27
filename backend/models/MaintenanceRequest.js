@@ -1,85 +1,60 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const mongoose = require('mongoose');
 
-const MaintenanceRequest = sequelize.define('MaintenanceRequest', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+const maintenanceRequestSchema = new mongoose.Schema({
     subject: {
-        type: DataTypes.STRING(255),
-        allowNull: false
+        type: String,
+        required: [true, 'Please add a subject'],
+        trim: true
     },
     description: {
-        type: DataTypes.TEXT,
-        allowNull: true
+        type: String,
+        required: [true, 'Please add a description']
     },
     type: {
-        type: DataTypes.ENUM('corrective', 'preventive'),
-        allowNull: false,
-        defaultValue: 'corrective'
+        type: String,
+        enum: ['corrective', 'preventive'],
+        required: true
+    },
+    priority: {
+        type: String,
+        enum: ['low', 'medium', 'high'],
+        default: 'medium'
     },
     stage: {
-        type: DataTypes.ENUM('new', 'in_progress', 'repaired', 'scrap'),
-        allowNull: false,
-        defaultValue: 'new'
+        type: String,
+        enum: ['new', 'in-progress', 'repaired', 'scrap'],
+        default: 'new'
     },
-    equipment_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'equipment',
-            key: 'id'
-        }
+    equipment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Equipment',
+        required: true
     },
-    team_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'maintenance_teams',
-            key: 'id'
-        }
+    assigned_team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'MaintenanceTeam',
+        required: true
     },
-    assigned_to: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'users',
-            key: 'id'
-        }
-    },
-    scheduled_date: {
-        type: DataTypes.DATE,
-        allowNull: true
-    },
-    duration: {
-        type: DataTypes.FLOAT,
-        allowNull: true,
-        comment: 'Duration in hours'
-    },
-    scrap_reason: {
-        type: DataTypes.TEXT,
-        allowNull: true
+    assigned_technician: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     created_by: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'users',
-            key: 'id'
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    scheduled_date: {
+        type: Date
+    },
+    completion_date: {
+        type: Date
+    },
+    hours_spent: {
+        type: Number
     }
 }, {
-    tableName: 'maintenance_requests',
     timestamps: true
 });
 
-// Virtual field for checking if request is overdue
-MaintenanceRequest.prototype.isOverdue = function () {
-    if (!this.scheduled_date) return false;
-    if (this.stage === 'repaired' || this.stage === 'scrap') return false;
-    return new Date() > new Date(this.scheduled_date);
-};
-
-module.exports = MaintenanceRequest;
+module.exports = mongoose.model('MaintenanceRequest', maintenanceRequestSchema);

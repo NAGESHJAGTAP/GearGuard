@@ -1,24 +1,18 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const mongoose = require('mongoose');
 
-const Department = sequelize.define('Department', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+const departmentSchema = new mongoose.Schema({
     name: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true
+        type: String,
+        required: [true, 'Please add a department name'],
+        unique: true,
+        trim: true
     },
     description: {
-        type: DataTypes.TEXT,
-        allowNull: true
+        type: String,
+        required: [true, 'Please add a description']
     }
 }, {
-    tableName: 'departments',
     timestamps: true
 });
 
-module.exports = Department;
+module.exports = mongoose.model('Department', departmentSchema);
