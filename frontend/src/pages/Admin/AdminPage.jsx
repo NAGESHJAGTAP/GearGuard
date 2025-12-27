@@ -19,17 +19,22 @@ const AdminPage = () => {
         users: [
             { id: 1, name: 'John Doe', email: 'john@example.com', role: 'admin' },
             { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'manager' },
-            { id: 3, name: 'Bob Wilson', email: 'bob@example.com', role: 'technician' }
+            { id: 3, name: 'Bob Wilson', email: 'bob@example.com', role: 'technician' },
+            { id: 4, name: 'Alice Cooper', email: 'alice@example.com', role: 'technician' },
+            { id: 5, name: 'Charlie Brown', email: 'charlie@example.com', role: 'employee' }
         ],
         departments: [
             { id: 1, name: 'Manufacturing', code: 'MFG' },
             { id: 2, name: 'Quality Control', code: 'QC' },
-            { id: 3, name: 'Maintenance', code: 'MNT' }
+            { id: 3, name: 'Maintenance', code: 'MNT' },
+            { id: 4, name: 'Logistics', code: 'LOG' },
+            { id: 5, name: 'Human Resources', code: 'HR' }
         ],
         teams: [
             { id: 1, name: 'Alpha Team', specialty: 'Heavy Machinery' },
             { id: 2, name: 'Beta Team', specialty: 'Electronics' },
-            { id: 3, name: 'Gamma Team', specialty: 'Piping' }
+            { id: 3, name: 'Gamma Team', specialty: 'Piping' },
+            { id: 4, name: 'Delta Team', specialty: 'Facilities' }
         ]
     };
 

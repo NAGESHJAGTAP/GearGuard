@@ -13,7 +13,8 @@ const TeamListPage = () => {
             specialty: 'Heavy Machinery',
             members: [
                 { id: 101, name: 'Sarah Tech', role: 'Team Lead' },
-                { id: 102, name: 'Mike Fixer', role: 'Technician' }
+                { id: 102, name: 'Mike Fixer', role: 'Technician' },
+                { id: 103, name: 'Bob Welder', role: 'Technician' }
             ],
             activeJobs: 3
         },
@@ -25,14 +26,25 @@ const TeamListPage = () => {
                 { id: 201, name: 'John Watts', role: 'Team Lead' },
                 { id: 202, name: 'Alice Circuits', role: 'Technician' }
             ],
-            activeJobs: 1
+            activeJobs: 2
         },
         {
             id: 3,
             name: 'Gamma Facilities',
             specialty: 'Building Maintenance',
             members: [
-                { id: 301, name: 'Dave Plumber', role: 'Team Lead' }
+                { id: 301, name: 'Dave Plumber', role: 'Team Lead' },
+                { id: 302, name: 'Steve HVAC', role: 'Technician' }
+            ],
+            activeJobs: 1
+        },
+        {
+            id: 4,
+            name: 'Delta Rapid',
+            specialty: 'Emergency Response',
+            members: [
+                { id: 401, name: 'Speedy Gonzales', role: 'Team Lead' },
+                { id: 402, name: 'Flash Gordon', role: 'Specialist' }
             ],
             activeJobs: 0
         }

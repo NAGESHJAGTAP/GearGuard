@@ -8,12 +8,16 @@ const CalendarViewPage = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
 
     // Demo Data
+    // Demo Data
     const demoEvents = [
         { id: 1, title: 'Preventive Maintenance: HVAC', date: new Date().toISOString().split('T')[0], type: 'preventive' },
         { id: 2, title: 'Lathe Inspection', date: new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0], type: 'inspection' }, // +2 days
         { id: 3, title: 'Forklift Service', date: new Date(Date.now() - 86400000 * 3).toISOString().split('T')[0], type: 'corrective' }, // -3 days
         { id: 4, title: 'Safety Audit', date: new Date(Date.now() + 86400000 * 5).toISOString().split('T')[0], type: 'audit' },
-        { id: 5, title: 'Conveyor Belt Lubrication', date: new Date(Date.now() + 86400000 * 10).toISOString().split('T')[0], type: 'preventive' }
+        { id: 5, title: 'Conveyor Belt Lubrication', date: new Date(Date.now() + 86400000 * 10).toISOString().split('T')[0], type: 'preventive' },
+        { id: 6, title: 'Fire Safety Board Review', date: new Date(Date.now() + 86400000 * 12).toISOString().split('T')[0], type: 'audit' },
+        { id: 7, title: 'Hydraulic Press Calibration', date: new Date(Date.now() + 86400000 * 15).toISOString().split('T')[0], type: 'inspection' },
+        { id: 8, title: 'Emergency Gen Run-Test', date: new Date(Date.now() - 86400000 * 7).toISOString().split('T')[0], type: 'preventive' }
     ];
 
     useEffect(() => {
