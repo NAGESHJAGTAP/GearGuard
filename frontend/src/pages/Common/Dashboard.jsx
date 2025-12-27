@@ -13,6 +13,7 @@ const Dashboard = () => {
         totalEquipment: 0
     });
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchStats();
@@ -20,6 +21,7 @@ const Dashboard = () => {
 
     const fetchStats = async () => {
         try {
+            setError(null);
             const [requestsRes, equipmentRes] = await Promise.all([
                 api.get('/requests'),
                 api.get('/equipment')
@@ -36,6 +38,7 @@ const Dashboard = () => {
             });
         } catch (error) {
             console.error('Error fetching stats:', error);
+            setError('Failed to fetch dashboard statistics. Please try again later.');
         } finally {
             setLoading(false);
         }
@@ -43,6 +46,10 @@ const Dashboard = () => {
 
     if (loading) {
         return <div className="loading">Loading dashboard...</div>;
+    }
+
+    if (error) {
+        return <div className="error-message" style={{ color: 'red', padding: '2rem', textAlign: 'center' }}>{error}</div>;
     }
 
     return (
